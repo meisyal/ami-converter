@@ -19,12 +19,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainGUI extends javax.swing.JFrame {
     int type;
+    String[][] inputExtension;
+    String[][][] outputExtension;
     
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
+        this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files","Avi video files"}, {"bmp","wav","avi"}};
+        this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"}, {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
     }
@@ -198,9 +202,9 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser OPF;
         OPF=new JFileChooser();
-        FileFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
-        System.out.print(Arrays.toString(ImageIO.getReaderFileSuffixes()));
-        OPF.addChoosableFileFilter(imageFilter);
+        FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], inputExtension[1][type]);
+        //System.out.print(Arrays.toString(ImageIO.getReaderFileSuffixes()));
+        OPF.setFileFilter(fileFilter);
         int result = OPF.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             TxtSource.setText(OPF.getSelectedFile().getPath());
@@ -211,7 +215,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
         // TODO add your handling code here:
-         type=CboType.getSelectedIndex()+1;
+         type=CboType.getSelectedIndex();
     }//GEN-LAST:event_CboTypeActionPerformed
 
     private void TxtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDestinationActionPerformed
