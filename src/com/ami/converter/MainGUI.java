@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainGUI extends javax.swing.JFrame {
     int type;
+    int count[];
     String[][] inputExtension;
     String[][][] outputExtension;
     
@@ -27,8 +28,14 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public MainGUI() {
         initComponents();
+        this.count = new int[3];
+        count[0]=3;
+        count[1]=3;
+        count[2]=3;
+        
         this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files","Avi video files"}, {"bmp","wav","avi"}};
-        this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"}, {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}}};
+        this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"}, {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}}
+                                                ,{{"jpg", "png", "tif"}, {"mp3", "aac", "mp2"}, {"mpg","ts","mp4"}}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
     }
@@ -44,6 +51,13 @@ public class MainGUI extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         CboType = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,6 +75,19 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        PGBar = new javax.swing.JProgressBar();
+        jSeparator6 = new javax.swing.JSeparator();
+        LblResult = new javax.swing.JLabel();
+        LblSize2 = new javax.swing.JLabel();
+        LblSize1 = new javax.swing.JLabel();
+
+        jScrollPane1.setViewportView(jEditorPane1);
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Compression Result");
@@ -98,8 +125,18 @@ public class MainGUI extends javax.swing.JFrame {
         });
 
         CmdBrowse2.setText("Browse...");
+        CmdBrowse2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmdBrowse2ActionPerformed(evt);
+            }
+        });
 
         CmdConvert.setText("Convert");
+        CmdConvert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmdConvertActionPerformed(evt);
+            }
+        });
 
         CmdExit.setText("Exit");
         CmdExit.addActionListener(new java.awt.event.ActionListener() {
@@ -116,15 +153,23 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Compressed file size is");
 
+        LblResult.setText("LblResult");
+
+        LblSize2.setText("LblSize2");
+
+        LblSize1.setText("LblSize1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator6)
+                    .addComponent(PGBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -145,16 +190,20 @@ public class MainGUI extends javax.swing.JFrame {
                                     .addComponent(CmdBrowse1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(CmdBrowse2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(CmdExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel4))
-                    .addComponent(jSeparator3))
+                    .addComponent(jSeparator3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblResult, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,15 +231,25 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CmdExit)
                     .addComponent(CmdConvert))
-                .addGap(17, 17, 17)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(11, 11, 11)
-                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PGBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(LblResult))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(LblSize1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(LblSize2))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
@@ -209,6 +268,7 @@ public class MainGUI extends javax.swing.JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             TxtSource.setText(OPF.getSelectedFile().getPath());
              File selectedFile= OPF.getSelectedFile();
+             
             // user OPF a file
         }
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
@@ -226,6 +286,40 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_CmdExitActionPerformed
+
+    private void CmdConvertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdConvertActionPerformed
+        // TODO add your handling code here:
+        PGBar.setValue(PGBar.getMaximum());
+    }//GEN-LAST:event_CmdConvertActionPerformed
+
+    private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        JFileChooser SPF;
+        SPF=new JFileChooser();
+        //FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], inputExtension[1][type]);
+        for(int i=0;i<count[type];i++)
+        {
+            FileFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[0][type][i]);
+            SPF.addChoosableFileFilter(fileFilter);
+        }
+        //System.out.print(Arrays.toString(ImageIO.getReaderFileSuffixes()));
+        SPF.setAcceptAllFileFilterUsed(false);
+        int result = SPF.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            FileNameExtensionFilter selectedFilter= (FileNameExtensionFilter)SPF.getFileFilter();
+            if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0]))
+            {
+                TxtDestination.setText(SPF.getSelectedFile().getPath()+"."+selectedFilter.getExtensions()[0]);
+            }
+            else
+            {
+                TxtDestination.setText(SPF.getSelectedFile().getPath());
+            }
+             File selectedFile= SPF.getSelectedFile();
+            // user OPF a file
+        }
+    }//GEN-LAST:event_CmdBrowse2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,8 +362,13 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JButton CmdBrowse2;
     private javax.swing.JButton CmdConvert;
     private javax.swing.JButton CmdExit;
+    private javax.swing.JLabel LblResult;
+    private javax.swing.JLabel LblSize1;
+    private javax.swing.JLabel LblSize2;
+    private javax.swing.JProgressBar PGBar;
     private javax.swing.JTextField TxtDestination;
     private javax.swing.JTextField TxtSource;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
@@ -279,8 +378,15 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }
