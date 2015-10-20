@@ -6,9 +6,7 @@
 package com.ami.converter;
 
 import java.io.File;
-import java.util.Arrays;
-import javafx.stage.FileChooser;
-import javax.imageio.ImageIO;
+import java.text.DecimalFormat;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,9 +27,9 @@ public class MainGUI extends javax.swing.JFrame {
     public MainGUI() {
         initComponents();
         this.count = new int[3];
-        count[0]=3;
-        count[1]=3;
-        count[2]=3;
+        count[0] = 3;
+        count[1] = 3;
+        count[2] = 3;
         
         this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files","Avi video files"}, {"bmp","wav","avi"}};
         this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"}, {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}}
@@ -157,7 +155,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         LblSize2.setText("LblSize2");
 
-        LblSize1.setText("LblSize1");
+        LblSize1.setText("No file selected");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,32 +256,37 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CmdBrowse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse1ActionPerformed
-        // TODO add your handling code here:
         JFileChooser OPF;
-        OPF=new JFileChooser();
+        OPF = new JFileChooser();
         FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], inputExtension[1][type]);
-        //System.out.print(Arrays.toString(ImageIO.getReaderFileSuffixes()));
         OPF.setFileFilter(fileFilter);
         int result = OPF.showOpenDialog(this);
+        
         if (result == JFileChooser.APPROVE_OPTION) {
             TxtSource.setText(OPF.getSelectedFile().getPath());
-             File selectedFile= OPF.getSelectedFile();
-             
+            File selectedFile = OPF.getSelectedFile();
             // user OPF a file
+            
+            // get original file size
+            double bytes = selectedFile.length();
+            final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
+            int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
+            DecimalFormat df = new DecimalFormat("#,##0.#");
+            String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+            LblSize1.setText(originalSize);
         }
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
-        // TODO add your handling code here:
-         type=CboType.getSelectedIndex();
+         type = CboType.getSelectedIndex();
     }//GEN-LAST:event_CboTypeActionPerformed
 
     private void TxtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDestinationActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_TxtDestinationActionPerformed
 
     private void CmdExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdExitActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_CmdExitActionPerformed
 
@@ -293,27 +296,22 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_CmdConvertActionPerformed
 
     private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
         JFileChooser SPF;
-        SPF=new JFileChooser();
-        //FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], inputExtension[1][type]);
-        for(int i=0;i<count[type];i++)
-        {
+        SPF = new JFileChooser();
+        
+        for(int i = 0; i < count[type]; i++) {
             FileFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[0][type][i]);
             SPF.addChoosableFileFilter(fileFilter);
         }
-        //System.out.print(Arrays.toString(ImageIO.getReaderFileSuffixes()));
+        
         SPF.setAcceptAllFileFilterUsed(false);
         int result = SPF.showSaveDialog(this);
+        
         if (result == JFileChooser.APPROVE_OPTION) {
-            FileNameExtensionFilter selectedFilter= (FileNameExtensionFilter)SPF.getFileFilter();
-            if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0]))
-            {
-                TxtDestination.setText(SPF.getSelectedFile().getPath()+"."+selectedFilter.getExtensions()[0]);
-            }
-            else
-            {
+            FileNameExtensionFilter selectedFilter = (FileNameExtensionFilter)SPF.getFileFilter();
+            if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0])) {
+                TxtDestination.setText(SPF.getSelectedFile().getPath() + "." + selectedFilter.getExtensions()[0]);
+            } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
              File selectedFile= SPF.getSelectedFile();

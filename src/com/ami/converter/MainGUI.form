@@ -297,7 +297,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="LblSize1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="LblSize1"/>
+        <Property name="text" type="java.lang.String" value="No file selected"/>
       </Properties>
     </Component>
   </SubComponents>
