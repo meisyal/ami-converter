@@ -99,9 +99,9 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Multimedia type :");
+        jLabel1.setText("Multimedia type:");
 
-        jLabel2.setText("Source");
+        jLabel2.setText("Source file");
 
         TxtSource.setText("\\your\\source\\file\\path");
 
@@ -113,7 +113,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Destination");
+        jLabel3.setText("Destination file");
 
         TxtDestination.setText("\\your\\destination\\file\\path");
         TxtDestination.addActionListener(new java.awt.event.ActionListener() {
@@ -151,9 +151,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Compressed file size is");
 
-        LblResult.setText("LblResult");
-
-        LblSize2.setText("LblSize2");
+        LblSize2.setText("No file compressed");
 
         LblSize1.setText("No file selected");
 

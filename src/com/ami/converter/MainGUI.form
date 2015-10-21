@@ -196,12 +196,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Multimedia type :"/>
+        <Property name="text" type="java.lang.String" value="Multimedia type:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Source"/>
+        <Property name="text" type="java.lang.String" value="Source file"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -222,7 +222,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Destination"/>
+        <Property name="text" type="java.lang.String" value="Destination file"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TxtDestination">
@@ -286,13 +286,10 @@
     <Component class="javax.swing.JSeparator" name="jSeparator6">
     </Component>
     <Component class="javax.swing.JLabel" name="LblResult">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="LblResult"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LblSize2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="LblSize2"/>
+        <Property name="text" type="java.lang.String" value="No file compressed"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LblSize1">
