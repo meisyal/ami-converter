@@ -20,6 +20,13 @@ import javax.imageio.stream.FileImageOutputStream;
  * @author Andrias
  */
 public class JpegEncoder {
+
+    /**
+     *
+     * @param sourcePath
+     * @param destinationPath
+     * @throws IOException
+     */
     public void encodeJPEG(String sourcePath, String destinationPath) throws IOException {
         File sourceFile = new File(sourcePath);
         File destinationFile = new File(destinationPath);
