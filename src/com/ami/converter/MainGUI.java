@@ -36,6 +36,7 @@ public class MainGUI extends javax.swing.JFrame {
                                                 ,{{"jpg", "png", "tif"}, {"mp3", "aac", "mp2"}, {"mpg","ts","mp4"}}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
+        CmdConvert.setEnabled(false);
     }
 
     /**
@@ -265,13 +266,17 @@ public class MainGUI extends javax.swing.JFrame {
             File selectedFile = OPF.getSelectedFile();
             // user OPF a file
             
-            // get original file size
-            double bytes = selectedFile.length();
-            final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
-            int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
-            DecimalFormat df = new DecimalFormat("#,##0.#");
-            String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
-            LblSize1.setText(originalSize);
+            // disable convert button when there isn't selected file
+            if (selectedFile != null && selectedFile.isFile()) {
+                // get original file size
+                double bytes = selectedFile.length();
+                final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
+                int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
+                DecimalFormat df = new DecimalFormat("#,##0.#");
+                String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+                LblSize1.setText(originalSize);
+                CmdConvert.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
@@ -312,7 +317,8 @@ public class MainGUI extends javax.swing.JFrame {
             } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
-             File selectedFile= SPF.getSelectedFile();
+            
+            File selectedFile = SPF.getSelectedFile();
             // user OPF a file
         }
     }//GEN-LAST:event_CmdBrowse2ActionPerformed
