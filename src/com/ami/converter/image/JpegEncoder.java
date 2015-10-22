@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ami.converter.jpeg;
+package com.ami.converter.image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
