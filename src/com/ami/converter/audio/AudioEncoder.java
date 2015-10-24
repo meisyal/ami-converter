@@ -15,16 +15,15 @@ import java.io.File;
  *
  * @author Andrias
  */
-public class Mp4Encoder {
+public class AudioEncoder {
 
     /**
      *
      * @param sourcePath
      * @param destinationPath
-     * @throws IllegalArgumentException
-     * @throws EncoderException
+     * @throws it.sauronsoftware.jave.EncoderException
      */
-    public void encodeMp4(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
+    public void encodeMp3(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -32,10 +31,10 @@ public class Mp4Encoder {
         
         AudioAttributes audio;
         audio = new AudioAttributes();
-        audio.setCodec();
+        audio.setCodec(sourcePath);
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
-        attrs.setFormat("mp4");
+        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".")+1));
         attrs.setAudioAttributes(audio);
         
         Encoder encoder;
