@@ -27,23 +27,31 @@ public class JpegEncoder {
      * @param destinationPath
      * @throws IOException
      */
-    public void encodeJPEG(String sourcePath, String destinationPath) throws IOException {
-        File sourceFile = new File(sourcePath);
-        File destinationFile = new File(destinationPath);
+    public void encodeJpeg(String sourcePath, String destinationPath) throws IOException {
+        File sourceFile;
+        sourceFile = new File(sourcePath);
+        File destinationFile;
+        destinationFile = new File(destinationPath);
         
-        BufferedImage bufferedImage = ImageIO.read(sourceFile);
+        BufferedImage bufferedImage;
+        bufferedImage = ImageIO.read(sourceFile);
         
-        Iterator iter = ImageIO.getImageWritersByFormatName("jpeg");
-        ImageWriter writer = (ImageWriter) iter.next();
-        ImageWriteParam iwp = writer.getDefaultWriteParam();
+        Iterator iter;
+        iter = ImageIO.getImageWritersByFormatName("jpeg");
+        ImageWriter writer;
+        writer = (ImageWriter) iter.next();
+        ImageWriteParam iwp;
+        iwp = writer.getDefaultWriteParam();
         
         iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
         iwp.setCompressionQuality(1);
         
-        FileImageOutputStream output = new FileImageOutputStream(destinationFile);
+        FileImageOutputStream output;
+        output = new FileImageOutputStream(destinationFile);
         writer.setOutput(output);
         
-        IIOImage image = new IIOImage(bufferedImage, null, null);
+        IIOImage image;
+        image = new IIOImage(bufferedImage, null, null);
         writer.write(null, image, iwp);
         writer.dispose();
     }

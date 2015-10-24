@@ -31,9 +31,12 @@ public class MainGUI extends javax.swing.JFrame {
         count[1] = 3;
         count[2] = 3;
         
-        this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files","Avi video files"}, {"bmp","wav","avi"}};
-        this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"}, {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}}
-                                                ,{{"jpg", "png", "tif"}, {"mp3", "aac", "mp2"}, {"mpg","ts","mp4"}}};
+        this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files", 
+            "Avi video files"}, {"bmp","wav","avi"}};
+        this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", 
+            "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"},
+            {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}},
+            {{"jpg", "png", "tif"}, {"mp3", "aac", "mp2"}, {"mpg","ts","mp4"}}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
@@ -257,7 +260,8 @@ public class MainGUI extends javax.swing.JFrame {
     private void CmdBrowse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse1ActionPerformed
         JFileChooser OPF;
         OPF = new JFileChooser();
-        FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], inputExtension[1][type]);
+        FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], 
+                inputExtension[1][type]);
         OPF.setFileFilter(fileFilter);
         int result = OPF.showOpenDialog(this);
         
@@ -273,7 +277,8 @@ public class MainGUI extends javax.swing.JFrame {
                 final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
                 int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
                 DecimalFormat df = new DecimalFormat("#,##0.#");
-                String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+                String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
+                        units[digitGroups];
                 LblSize1.setText(originalSize);
                 CmdConvert.setEnabled(true);
             }
@@ -303,7 +308,8 @@ public class MainGUI extends javax.swing.JFrame {
         SPF = new JFileChooser();
         
         for(int i = 0; i < count[type]; i++) {
-            FileFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[0][type][i]);
+            FileFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], 
+                    outputExtension[0][type][i]);
             SPF.addChoosableFileFilter(fileFilter);
         }
         
@@ -313,7 +319,8 @@ public class MainGUI extends javax.swing.JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             FileNameExtensionFilter selectedFilter = (FileNameExtensionFilter)SPF.getFileFilter();
             if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0])) {
-                TxtDestination.setText(SPF.getSelectedFile().getPath() + "." + selectedFilter.getExtensions()[0]);
+                TxtDestination.setText(SPF.getSelectedFile().getPath() + "." + 
+                        selectedFilter.getExtensions()[0]);
             } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
