@@ -23,7 +23,7 @@ public class AudioEncoder {
      * @param destinationPath
      * @throws it.sauronsoftware.jave.EncoderException
      */
-    public void encodeMp3(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
+    public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -31,10 +31,10 @@ public class AudioEncoder {
         
         AudioAttributes audio;
         audio = new AudioAttributes();
-        audio.setCodec(sourcePath);
+        audio.setCodec("codecName");
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
-        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".")+1));
+        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".") + 1));
         attrs.setAudioAttributes(audio);
         
         Encoder encoder;

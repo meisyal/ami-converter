@@ -15,7 +15,7 @@ import java.io.File;
  *
  * @author Andrias
  */
-public class H263Encoder {
+public class VideoEncoder {
 
     /**
      *
@@ -24,7 +24,7 @@ public class H263Encoder {
      * @throws IllegalArgumentException
      * @throws EncoderException
      */
-    public void encodeH263(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
+    public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -32,10 +32,10 @@ public class H263Encoder {
         
         VideoAttributes video;
         video = new VideoAttributes();
-        video.setCodec();
+        video.setCodec("codecName");
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
-        attrs.setFormat("h263");
+        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".") + 1));
         attrs.setVideoAttributes(video);
         
         Encoder encoder;
