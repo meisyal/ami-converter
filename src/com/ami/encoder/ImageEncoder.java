@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ami.converter.image;
+package com.ami.encoder;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,17 +12,11 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Andrias
+ * @author ASUS-PC
  */
-public class PngEncoder {
-
-    /**
-     *
-     * @param sourcePath
-     * @param destinationPath
-     * @throws IOException
-     */
-    public void encodePng(String sourcePath, String destinationPath) throws IOException {
+public class ImageEncoder {
+    String filetype;
+    public int encode(String sourcePath, String destinationPath) throws IOException{
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -30,7 +24,8 @@ public class PngEncoder {
         
         BufferedImage bufferedImage;
         bufferedImage = ImageIO.read(sourceFile);
-        
-        ImageIO.write(bufferedImage, "png", destinationFile);
+        ImageIO.write(bufferedImage, destinationPath.substring(destinationPath.lastIndexOf(".")+1), destinationFile);
+        return 0;
     }
+    
 }

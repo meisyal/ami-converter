@@ -208,7 +208,8 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TxtSource">
       <Properties>
-        <Property name="text" type="java.lang.String" value="\u005cyour\u005csource\u005cfile\u005cpath" containsInvalidXMLChars="true"/>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Choose a source file by clicking the &apos;Browse...&apos; button"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="CmdBrowse1">
@@ -227,7 +228,8 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TxtDestination">
       <Properties>
-        <Property name="text" type="java.lang.String" value="\u005cyour\u005cdestination\u005cfile\u005cpath" containsInvalidXMLChars="true"/>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Choose a destination file by clicking the &apos;Browse...&apos; button"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDestinationActionPerformed"/>
@@ -289,12 +291,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="LblSize2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No file compressed"/>
+        <Property name="text" type="java.lang.String" value="KiB"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LblSize1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No file selected"/>
+        <Property name="text" type="java.lang.String" value="KiB"/>
       </Properties>
     </Component>
   </SubComponents>

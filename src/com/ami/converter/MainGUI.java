@@ -104,7 +104,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Source file");
 
-        TxtSource.setText("\\your\\source\\file\\path");
+        TxtSource.setEditable(false);
+        TxtSource.setText("Choose a source file by clicking the 'Browse...' button");
 
         CmdBrowse1.setText("Browse...");
         CmdBrowse1.setToolTipText("");
@@ -116,7 +117,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Destination file");
 
-        TxtDestination.setText("\\your\\destination\\file\\path");
+        TxtDestination.setEditable(false);
+        TxtDestination.setText("Choose a destination file by clicking the 'Browse...' button");
         TxtDestination.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtDestinationActionPerformed(evt);
@@ -152,9 +154,9 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Compressed file size is");
 
-        LblSize2.setText("No file compressed");
+        LblSize2.setText("KiB");
 
-        LblSize1.setText("No file selected");
+        LblSize1.setText("KiB");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -303,7 +305,7 @@ public class MainGUI extends javax.swing.JFrame {
         SPF = new JFileChooser();
         
         for(int i = 0; i < count[type]; i++) {
-            FileFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[0][type][i]);
+            FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[1][type][i]);
             SPF.addChoosableFileFilter(fileFilter);
         }
         
@@ -312,12 +314,16 @@ public class MainGUI extends javax.swing.JFrame {
         
         if (result == JFileChooser.APPROVE_OPTION) {
             FileNameExtensionFilter selectedFilter = (FileNameExtensionFilter)SPF.getFileFilter();
+            for(String ext :selectedFilter.getExtensions())
+            {
+                System.out.println(ext);
+            }
             if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0])) {
                 TxtDestination.setText(SPF.getSelectedFile().getPath() + "." + selectedFilter.getExtensions()[0]);
             } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
-            
+            System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".")+1));
             File selectedFile = SPF.getSelectedFile();
             // user OPF a file
         }
