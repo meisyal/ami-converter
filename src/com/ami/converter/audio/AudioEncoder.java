@@ -10,8 +10,6 @@ import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -27,7 +25,8 @@ public class AudioEncoder {
      */
     
     public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
-        String type=destinationPath.substring(destinationPath.lastIndexOf(".")+1);
+        String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
+        
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -36,15 +35,13 @@ public class AudioEncoder {
         encoder = new Encoder();
         AudioAttributes audio;
         audio = new AudioAttributes();
-        
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
-        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".") + 1));
+        attrs.setFormat(formatType);
         attrs.setAudioAttributes(audio);
-        for(String enc : encoder.getAudioEncoders())
-        {
-            if(enc.contains(type))
-            {
+        
+        for (String enc : encoder.getAudioEncoders()) {
+            if (enc.contains(formatType)) {
                 audio.setCodec(enc);
             }
         }

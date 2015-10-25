@@ -212,7 +212,7 @@
     <Component class="javax.swing.JTextField" name="TxtSource">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="Choose a source file by clicking the &apos;Browse...&apos; button"/>
+        <Property name="text" type="java.lang.String" value="Choose a source file by clicking the &quot;Browse...&quot; button"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtSourceActionPerformed"/>
@@ -236,7 +236,7 @@
     <Component class="javax.swing.JTextField" name="TxtDestination">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="Choose a destination file by clicking the &apos;Browse...&apos; button"/>
+        <Property name="text" type="java.lang.String" value="Choose a destination file by clicking the &quot;Browse...&quot; button"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDestinationActionPerformed"/>

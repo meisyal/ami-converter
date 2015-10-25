@@ -15,17 +15,22 @@ import javax.imageio.ImageIO;
  * @author ASUS-PC
  */
 public class ImageEncoder {
-    String filetype;
-    public int encode(String sourcePath, String destinationPath) throws IOException{
+
+    /**
+     *
+     * @param sourcePath
+     * @param destinationPath
+     * @throws IOException
+     */
+    public void encode(String sourcePath, String destinationPath) throws IOException{
+        String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
+                
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
         destinationFile = new File(destinationPath);
-        
         BufferedImage bufferedImage;
         bufferedImage = ImageIO.read(sourceFile);
-        ImageIO.write(bufferedImage, destinationPath.substring(destinationPath.lastIndexOf(".")+1), destinationFile);
-        return 0;
+        ImageIO.write(bufferedImage, formatType, destinationFile);
     }
-    
 }

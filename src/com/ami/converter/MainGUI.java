@@ -44,14 +44,15 @@ public class MainGUI extends javax.swing.JFrame {
         count[1] = 3;
         count[2] = 3;
         
-        this.inputExtension = new String[][]{{"Bitmap image files","Wave audio files", 
-            "Avi video files"}, {"bmp","wav","avi"}};
+        this.inputExtension = new String[][]{{"Bitmap image files", "Wave audio files", 
+            "Avi video files"}, {"bmp", "wav", "avi"}};
         this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", 
-            "TIFF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"},
+            "GIF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"},
             {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}},
-            {{"jpg", "png", "tif"}, {"mp3", "aac", "mp2"}, {"vob","vob","mp4"}}};
+            {{"jpg", "png", "gif"}, {"mp3", "aac", "mp2"}, {"vob", "vob", "mp4"}}};
+        this.codec = new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4"}, {"mpeg1video",
+            "mpeg2video", "mpeg4"}};
         
-        this.codec=new String[][]{{"MPEG","MPEG2","h.264/MPEG4"},{"mpeg1video","mpeg2video","mpeg4"}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
@@ -124,7 +125,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel2.setText("Source file");
 
         TxtSource.setEditable(false);
-        TxtSource.setText("Choose a source file by clicking the 'Browse...' button");
+        TxtSource.setText("Choose a source file by clicking the \"Browse...\" button");
         TxtSource.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtSourceActionPerformed(evt);
@@ -147,7 +148,7 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel3.setText("Destination file");
 
         TxtDestination.setEditable(false);
-        TxtDestination.setText("Choose a destination file by clicking the 'Browse...' button");
+        TxtDestination.setText("Choose a destination file by clicking the \"Browse...\" button");
         TxtDestination.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtDestinationActionPerformed(evt);
@@ -339,25 +340,24 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtDestinationActionPerformed
 
     private void CmdExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdExitActionPerformed
+        // Exit from program
         System.exit(0);
     }//GEN-LAST:event_CmdExitActionPerformed
 
     private void CmdConvertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdConvertActionPerformed
-        // TODO add your handling code here:
-        if(type==0)
-        {
+        if (type == 0) {
             ImageEncoder imgEnc;
             imgEnc= new ImageEncoder();
+            
             try {
                 imgEnc.encode(TxtSource.getText(), TxtDestination.getText());
             } catch (IOException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if(type==1)
-        {
+        } else if (type == 1) {
             AudioEncoder audEnc;
             audEnc= new AudioEncoder();
+            
             try {
                 audEnc.encode(TxtSource.getText(), TxtDestination.getText());
             } catch (IllegalArgumentException ex) {
@@ -365,13 +365,11 @@ public class MainGUI extends javax.swing.JFrame {
             } catch (EncoderException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        else
-        {
+        } else {
             VideoEncoder vidEnc;
             vidEnc= new VideoEncoder();
             vidEnc.setCodec(selectedCodec);
+            
             try {
                 vidEnc.encode(TxtSource.getText(), TxtDestination.getText());
             } catch (IllegalArgumentException ex) {
@@ -380,27 +378,32 @@ public class MainGUI extends javax.swing.JFrame {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         PGBar.setValue(PGBar.getMaximum());
         CmdOpen.setEnabled(true);
+        
         File selectedFile = new File(TxtDestination.getText());
+        
         if (selectedFile != null && selectedFile.isFile()) {
-                // get original file size
-                double bytes = selectedFile.length();
-                final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
-                int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
-                DecimalFormat df = new DecimalFormat("#,##0.#");
-                String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
-                        units[digitGroups];
-                LblSize2.setText(convertedSize);
-            }
+            // get compressed file size
+            double bytes = selectedFile.length();
+            final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
+            int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
+            DecimalFormat df = new DecimalFormat("#,##0.#");
+            String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
+                    units[digitGroups];
+            LblSize2.setText(convertedSize);
+        }
     }//GEN-LAST:event_CmdConvertActionPerformed
 
     private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
         JFileChooser SPF;
         SPF = new JFileChooser();
         
-        for(int i = 0; i < count[type]; i++) {
-            FileNameExtensionFilter fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i], outputExtension[1][type][i]);
+        for (int i = 0; i < count[type]; i++) {
+            FileNameExtensionFilter fileFilter;
+            fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i],
+                    outputExtension[1][type][i]);
             SPF.addChoosableFileFilter(fileFilter);
         }
         
@@ -410,26 +413,28 @@ public class MainGUI extends javax.swing.JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             CmdConvert.setEnabled(true);
             FileNameExtensionFilter selectedFilter = (FileNameExtensionFilter)SPF.getFileFilter();
-            for(String ext :selectedFilter.getExtensions())
-            {
+            
+            for (String ext :selectedFilter.getExtensions()) {
                 System.out.println(ext);
             }
-            if(!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0])) {
+            
+            if (!SPF.getSelectedFile().getPath().endsWith(selectedFilter.getExtensions()[0])) {
                 TxtDestination.setText(SPF.getSelectedFile().getPath() + "." + 
                         selectedFilter.getExtensions()[0]);
             } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
-            if(type==2)
-            {
-                for(int j=0;j<count[2];j++){
-                    if(selectedFilter.getDescription().contains(codec[0][j]))
-                    {
-                        selectedCodec=codec[1][j];
+            
+            if (type == 2) {
+                for (int j = 0; j < count[2]; j++){
+                    if (selectedFilter.getDescription().contains(codec[0][j])) {
+                        selectedCodec = codec[1][j];
                     }
                 }
             }
-            System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".")+1));
+            
+            System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".") + 1));
+            
             File selectedFile = SPF.getSelectedFile();
             // user OPF a file
         }
