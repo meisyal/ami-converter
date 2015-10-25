@@ -87,6 +87,8 @@
                                   <Component id="TxtDestination" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="CmdOpen" min="-2" pref="79" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="CmdConvert" min="-2" pref="79" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -150,6 +152,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="CmdExit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="CmdConvert" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CmdOpen" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
@@ -211,6 +214,10 @@
         <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="Choose a source file by clicking the &apos;Browse...&apos; button"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtSourceActionPerformed"/>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="TxtSourcePropertyChange"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="CmdBrowse1">
       <Properties>
@@ -238,6 +245,7 @@
     <Component class="javax.swing.JButton" name="CmdBrowse2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Browse..."/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CmdBrowse2ActionPerformed"/>
@@ -246,6 +254,7 @@
     <Component class="javax.swing.JButton" name="CmdConvert">
       <Properties>
         <Property name="text" type="java.lang.String" value="Convert"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CmdConvertActionPerformed"/>
@@ -298,6 +307,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="KiB"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="CmdOpen">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Open"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CmdOpenActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
