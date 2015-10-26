@@ -30,9 +30,11 @@ public class MainGUI extends javax.swing.JFrame {
     int count[];
     String[][] inputExtension;
     String[][][] outputExtension;
-    String[][] codec;
+    String[][] videoCodec;
+    String[][] audioCodec;
     String selectedCodec;
-
+    File currOpen;
+    File currSave;
     
     /**
      * Creates new form MainGUI
@@ -41,18 +43,19 @@ public class MainGUI extends javax.swing.JFrame {
         initComponents();
         this.count = new int[3];
         count[0] = 3;
-        count[1] = 3;
-        count[2] = 3;
+        count[1] = 6;
+        count[2] = 5;
         
         this.inputExtension = new String[][]{{"Bitmap image files", "Wave audio files", 
             "Avi video files"}, {"bmp", "wav", "avi"}};
         this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", 
-            "GIF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files"},
-            {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files"}},
-            {{"jpg", "png", "gif"}, {"mp3", "aac", "mp2"}, {"vob", "vob", "mp4"}}};
-        this.codec = new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4"}, {"mpeg1video",
-            "mpeg2video", "mpeg4"}};
+
+            "GIF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files","FLAC audio files","OGG audio files","WMA audio files"},
+            {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files","FLV video files","WMV video files"}},
+            {{"jpg", "png", "gif"}, {"mp3", "aac", "mp2", "flac","ogg","asf"}, {"vob","vob","mp4","flv","asf"}}};
         
+        this.audioCodec = new String[][]{{"MP3","AAC","MP2","FLAC","OGG","WMA"},{"libmp3lame","libfaac","mp2","flac","libvorbis","wmav2"}};
+        this.videoCodec=new String[][]{{"MPEG","MPEG2","h.264/MPEG4","FLV","WMV"},{"mpeg1video","mpeg2video","mpeg4","flv","wmv2"}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
@@ -302,6 +305,10 @@ public class MainGUI extends javax.swing.JFrame {
     private void CmdBrowse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse1ActionPerformed
         JFileChooser OPF;
         OPF = new JFileChooser();
+        if(currOpen!=null)
+        {
+            OPF.setCurrentDirectory(currOpen);
+        }
         FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], 
                 inputExtension[1][type]);
         OPF.setFileFilter(fileFilter);
@@ -325,8 +332,13 @@ public class MainGUI extends javax.swing.JFrame {
                 LblSize1.setText(originalSize);
                 CmdBrowse2.setEnabled(true);
                 CmdConvert.setEnabled(false);
-                CmdOpen.setEnabled(false);
+                CmdOpen.setEnabled(false);   
             }
+            currOpen=OPF.getCurrentDirectory();
+        }
+        else
+        {
+            currOpen=OPF.getCurrentDirectory();
         }
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
@@ -357,7 +369,9 @@ public class MainGUI extends javax.swing.JFrame {
         } else if (type == 1) {
             AudioEncoder audEnc;
             audEnc= new AudioEncoder();
-            
+
+            audEnc.setCodec(selectedCodec);
+            System.out.println(selectedCodec);
             try {
                 audEnc.encode(TxtSource.getText(), TxtDestination.getText());
             } catch (IllegalArgumentException ex) {
@@ -399,6 +413,10 @@ public class MainGUI extends javax.swing.JFrame {
     private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
         JFileChooser SPF;
         SPF = new JFileChooser();
+        if(currSave!=null)
+        {
+            SPF.setCurrentDirectory(currSave);
+        }
         
         for (int i = 0; i < count[type]; i++) {
             FileNameExtensionFilter fileFilter;
@@ -424,11 +442,22 @@ public class MainGUI extends javax.swing.JFrame {
             } else {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
-            
-            if (type == 2) {
-                for (int j = 0; j < count[2]; j++){
-                    if (selectedFilter.getDescription().contains(codec[0][j])) {
-                        selectedCodec = codec[1][j];
+
+            if(type==2)
+            {
+                for(int j=0;j<count[2];j++){
+                    if(selectedFilter.getDescription().contains(videoCodec[0][j]))
+                    {
+                        selectedCodec=videoCodec[1][j];
+                    }
+                }
+            }
+            else if(type==1)
+            {
+                for(int j=0;j<count[1];j++){
+                    if(selectedFilter.getDescription().contains(audioCodec[0][j]))
+                    {
+                        selectedCodec=audioCodec[1][j];
                     }
                 }
             }
@@ -436,7 +465,12 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".") + 1));
             
             File selectedFile = SPF.getSelectedFile();
+            currSave=SPF.getCurrentDirectory();
             // user OPF a file
+        }
+        else
+        {
+            currSave=SPF.getCurrentDirectory();
         }
     }//GEN-LAST:event_CmdBrowse2ActionPerformed
 

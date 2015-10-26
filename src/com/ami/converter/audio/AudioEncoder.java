@@ -23,7 +23,7 @@ public class AudioEncoder {
      * @param destinationPath
      * @throws it.sauronsoftware.jave.EncoderException
      */
-    
+    private String codec;
     public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
         String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
         
@@ -39,13 +39,35 @@ public class AudioEncoder {
         attrs = new EncodingAttributes();
         attrs.setFormat(formatType);
         attrs.setAudioAttributes(audio);
-        
-        for (String enc : encoder.getAudioEncoders()) {
-            if (enc.contains(formatType)) {
-                audio.setCodec(enc);
+
+        if(!getCodec().isEmpty())
+        {
+            audio.setCodec(codec);
+        }
+        else
+        {
+            for (String enc : encoder.getAudioEncoders()) {
+                if (enc.contains(formatType)) {
+                    audio.setCodec(enc);
+                }
             }
         }
+        
        
         encoder.encode(sourceFile, destinationFile, attrs);
+    }
+
+    /**
+     * @return the codec
+     */
+    public String getCodec() {
+        return codec;
+    }
+
+    /**
+     * @param Codec the codec to set
+     */
+    public void setCodec(String Codec) {
+        this.codec = Codec;
     }
 }
