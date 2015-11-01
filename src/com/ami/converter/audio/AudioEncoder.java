@@ -40,20 +40,16 @@ public class AudioEncoder {
         attrs.setFormat(formatType);
         attrs.setAudioAttributes(audio);
 
-        if(!getCodec().isEmpty())
-        {
+        if (!getCodec().isEmpty()) {
             audio.setCodec(codec);
-        }
-        else
-        {
+        } else {
             for (String enc : encoder.getAudioEncoders()) {
                 if (enc.contains(formatType)) {
                     audio.setCodec(enc);
                 }
             }
         }
-        
-       
+      
         encoder.encode(sourceFile, destinationFile, attrs);
     }
 

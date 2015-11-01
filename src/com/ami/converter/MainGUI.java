@@ -49,13 +49,16 @@ public class MainGUI extends javax.swing.JFrame {
         this.inputExtension = new String[][]{{"Bitmap image files", "Wave audio files", 
             "Avi video files"}, {"bmp", "wav", "avi"}};
         this.outputExtension = new String[][][]{{{"JPEG image files", "PNG image files", 
-
-            "GIF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files","FLAC audio files","OGG audio files","WMA audio files"},
-            {"MPEG video files", "MPEG2 video files", "h.264/MPEG4 AVC video files","FLV video files","WMV video files"}},
-            {{"jpg", "png", "gif"}, {"mp3", "aac", "mp2", "flac","ogg","asf"}, {"vob","vob","mp4","flv","asf"}}};
+            "GIF image files"}, {"MP3 audio files", "AAC audio files", "MP2 audio files",
+            "FLAC audio files", "OGG audio files", "WMA audio files"}, {"MPEG video files",
+            "MPEG2 video files", "h.264/MPEG4 AVC video files", "FLV video files",
+            "WMV video files"}}, {{"jpg", "png", "gif"}, {"mp3", "aac", "mp2", "flac",
+            "ogg", "asf"}, {"vob", "vob", "mp4", "flv", "asf"}}};
         
-        this.audioCodec = new String[][]{{"MP3","AAC","MP2","FLAC","OGG","WMA"},{"libmp3lame","libfaac","mp2","flac","libvorbis","wmav2"}};
-        this.videoCodec=new String[][]{{"MPEG","MPEG2","h.264/MPEG4","FLV","WMV"},{"mpeg1video","mpeg2video","mpeg4","flv","wmv2"}};
+        this.audioCodec = new String[][]{{"MP3", "AAC", "MP2", "FLAC", "OGG", "WMA"},
+            {"libmp3lame", "libfaac", "mp2", "flac", "libvorbis", "wmav2"}};
+        this.videoCodec=new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4", "FLV", "WMV"},
+            {"mpeg1video", "mpeg2video", "mpeg4", "flv", "wmv2"}};
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
@@ -305,17 +308,17 @@ public class MainGUI extends javax.swing.JFrame {
     private void CmdBrowse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse1ActionPerformed
         JFileChooser OPF;
         OPF = new JFileChooser();
-        if(currOpen!=null)
-        {
+        
+        if (currOpen != null) {
             OPF.setCurrentDirectory(currOpen);
         }
+        
         FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], 
                 inputExtension[1][type]);
         OPF.setFileFilter(fileFilter);
         int result = OPF.showOpenDialog(this);
         
-        if (result == JFileChooser.APPROVE_OPTION) {
-            
+        if (result == JFileChooser.APPROVE_OPTION) {   
             TxtSource.setText(OPF.getSelectedFile().getPath());
             File selectedFile = OPF.getSelectedFile();
             // user OPF a file
@@ -323,21 +326,15 @@ public class MainGUI extends javax.swing.JFrame {
             // disable convert button when there isn't selectedCodec file
             if (selectedFile != null && selectedFile.isFile()) {
                 // get original file size
-                double bytes = selectedFile.length();
-                final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
-                int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
-                DecimalFormat df = new DecimalFormat("#,##0.#");
-                String originalSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
-                        units[digitGroups];
+                String originalSize = getFileSize(selectedFile);
                 LblSize1.setText(originalSize);
                 CmdBrowse2.setEnabled(true);
                 CmdConvert.setEnabled(false);
                 CmdOpen.setEnabled(false);   
             }
+            
             currOpen=OPF.getCurrentDirectory();
-        }
-        else
-        {
+        } else {
             currOpen=OPF.getCurrentDirectory();
         }
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
@@ -372,6 +369,7 @@ public class MainGUI extends javax.swing.JFrame {
 
             audEnc.setCodec(selectedCodec);
             System.out.println(selectedCodec);
+            
             try {
                 audEnc.encode(TxtSource.getText(), TxtDestination.getText());
             } catch (IllegalArgumentException ex) {
@@ -400,21 +398,16 @@ public class MainGUI extends javax.swing.JFrame {
         
         if (selectedFile != null && selectedFile.isFile()) {
             // get compressed file size
-            double bytes = selectedFile.length();
-            final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
-            int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
-            DecimalFormat df = new DecimalFormat("#,##0.#");
-            String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
-                    units[digitGroups];
-            LblSize2.setText(convertedSize);
+            String compressedSize = getFileSize(selectedFile);
+            LblSize2.setText(compressedSize);
         }
     }//GEN-LAST:event_CmdConvertActionPerformed
 
     private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
         JFileChooser SPF;
         SPF = new JFileChooser();
-        if(currSave!=null)
-        {
+        
+        if (currSave != null) {
             SPF.setCurrentDirectory(currSave);
         }
         
@@ -443,21 +436,16 @@ public class MainGUI extends javax.swing.JFrame {
                 TxtDestination.setText(SPF.getSelectedFile().getPath());
             }
 
-            if(type==2)
-            {
-                for(int j=0;j<count[2];j++){
-                    if(selectedFilter.getDescription().contains(videoCodec[0][j]))
-                    {
-                        selectedCodec=videoCodec[1][j];
+            if (type == 2) {
+                for (int j = 0; j < count[2]; j++) {
+                    if (selectedFilter.getDescription().contains(videoCodec[0][j])) {
+                        selectedCodec = videoCodec[1][j];
                     }
                 }
-            }
-            else if(type==1)
-            {
-                for(int j=0;j<count[1];j++){
-                    if(selectedFilter.getDescription().contains(audioCodec[0][j]))
-                    {
-                        selectedCodec=audioCodec[1][j];
+            } else if (type == 1) {
+                for (int j = 0; j < count[1]; j++){
+                    if(selectedFilter.getDescription().contains(audioCodec[0][j])) {
+                        selectedCodec = audioCodec[1][j];
                     }
                 }
             }
@@ -465,12 +453,11 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".") + 1));
             
             File selectedFile = SPF.getSelectedFile();
-            currSave=SPF.getCurrentDirectory();
+            currSave = SPF.getCurrentDirectory();
             // user OPF a file
         }
-        else
-        {
-            currSave=SPF.getCurrentDirectory();
+        else {
+            currSave = SPF.getCurrentDirectory();
         }
     }//GEN-LAST:event_CmdBrowse2ActionPerformed
 
@@ -491,7 +478,18 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_TxtSourcePropertyChange
-
+    
+    private String getFileSize(File selectedFile) {
+        double bytes = selectedFile.length();
+        final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
+        int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
+        DecimalFormat df = new DecimalFormat("#,##0.#");
+        String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
+                units[digitGroups];
+        
+        return convertedSize;
+    }
+    
     /**
      * @param args the command line arguments
      */
