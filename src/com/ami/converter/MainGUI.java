@@ -105,6 +105,7 @@ public class MainGUI extends javax.swing.JFrame {
         LblSize2 = new javax.swing.JLabel();
         LblSize1 = new javax.swing.JLabel();
         CmdOpen = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -186,7 +187,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Copyright © 2015 AMI - Rahmat Irfan (5112100008), Andrias Meisyal (5112100116), and Afina Lina Nurlaili (5112100171)");
 
-        jLabel5.setText("Compression Result:");
+        jLabel5.setText("Compression Result/Rate:");
 
         jLabel6.setText("Original file size is");
 
@@ -203,6 +204,8 @@ public class MainGUI extends javax.swing.JFrame {
                 CmdOpenActionPerformed(evt);
             }
         });
+
+        jLabel8.setText("0 %");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,7 +251,10 @@ public class MainGUI extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LblResult, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(LblResult)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8))
                             .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
@@ -286,7 +292,8 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(LblResult))
+                    .addComponent(LblResult)
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -401,6 +408,8 @@ public class MainGUI extends javax.swing.JFrame {
             String compressedSize = getFileSize(selectedFile);
             LblSize2.setText(compressedSize);
         }
+        
+        getCompressionRatio();
     }//GEN-LAST:event_CmdConvertActionPerformed
 
     private void CmdBrowse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdBrowse2ActionPerformed
@@ -423,7 +432,8 @@ public class MainGUI extends javax.swing.JFrame {
         
         if (result == JFileChooser.APPROVE_OPTION) {
             CmdConvert.setEnabled(true);
-            FileNameExtensionFilter selectedFilter = (FileNameExtensionFilter)SPF.getFileFilter();
+            FileNameExtensionFilter selectedFilter; 
+            selectedFilter = (FileNameExtensionFilter) SPF.getFileFilter();
             
             for (String ext :selectedFilter.getExtensions()) {
                 System.out.println(ext);
@@ -450,7 +460,8 @@ public class MainGUI extends javax.swing.JFrame {
                 }
             }
             
-            System.out.println(TxtDestination.getText().substring(TxtDestination.getText().lastIndexOf(".") + 1));
+            System.out.println(TxtDestination.getText().substring(
+                    TxtDestination.getText().lastIndexOf(".") + 1));
             
             File selectedFile = SPF.getSelectedFile();
             currSave = SPF.getCurrentDirectory();
@@ -488,6 +499,26 @@ public class MainGUI extends javax.swing.JFrame {
                 units[digitGroups];
         
         return convertedSize;
+    }
+    
+    private void getCompressionRatio() {
+        String originalSizeText;
+        originalSizeText = LblSize1.getText();
+        String compressedSizeText;
+        compressedSizeText = LblSize2.getText();
+        
+        double originalSizeValue;
+        originalSizeValue = Double.parseDouble(
+                originalSizeText.substring(0, originalSizeText.indexOf(" ")));
+        
+        double compressedSizeValue;
+        compressedSizeValue = Double.parseDouble(
+                compressedSizeText.substring(0, compressedSizeText.indexOf(" ")));
+        
+        double compressionRatio;
+        compressionRatio = (originalSizeValue / compressedSizeValue);
+        
+        jLabel8.setText(String.valueOf(compressionRatio) + " %");
     }
     
     /**
@@ -548,6 +579,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
