@@ -13,6 +13,7 @@ import com.ami.converter.video.VideoEncoder;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import java.util.logging.Level;
@@ -518,7 +519,10 @@ public class MainGUI extends javax.swing.JFrame {
         double compressionRatio;
         compressionRatio = (originalSizeValue / compressedSizeValue);
         
-        jLabel8.setText(String.valueOf(compressionRatio) + " %");
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        
+        jLabel8.setText(String.valueOf(df.format(compressionRatio) + " %"));
     }
     
     /**
