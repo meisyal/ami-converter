@@ -5,7 +5,6 @@
  */
 package com.ami.converter;
 
-
 import it.sauronsoftware.jave.EncoderException;
 import com.ami.converter.image.ImageEncoder;
 import com.ami.converter.audio.AudioEncoder;
@@ -24,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author ASUS-PC
+ * @author Afina, Meisyal, Rahmat
  */
 public class MainGUI extends javax.swing.JFrame {
     int type;
@@ -60,9 +59,11 @@ public class MainGUI extends javax.swing.JFrame {
             {"libmp3lame", "libfaac", "mp2", "flac", "libvorbis", "wmav2"}};
         this.videoCodec=new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4", "FLV", "WMV"},
             {"mpeg1video", "mpeg2video", "mpeg4", "flv", "wmv2"}};
+        
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
+        jTextField1.setEnabled(false);
     }
 
     /**
@@ -107,6 +108,9 @@ public class MainGUI extends javax.swing.JFrame {
         LblSize1 = new javax.swing.JLabel();
         CmdOpen = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -208,6 +212,17 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel8.setText("0 %");
 
+        jLabel9.setText("Bitrate control");
+
+        jTextField1.setText("0");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("bits/s");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,7 +272,14 @@ public class MainGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
                             .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addGap(49, 49, 49)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -280,6 +302,11 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(TxtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CmdBrowse2))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(29, 29, 29)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -349,6 +376,12 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
          type = CboType.getSelectedIndex();
+         
+         if (type == 0) {
+             jTextField1.setEnabled(false);
+         } else {
+             jTextField1.setEnabled(true);
+         }
     }//GEN-LAST:event_CboTypeActionPerformed
 
     private void TxtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDestinationActionPerformed
@@ -475,7 +508,6 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void CmdOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdOpenActionPerformed
         try {
-            // TODO add your handling code here:
             Desktop.getDesktop().open(new File(TxtDestination.getText()));
         } catch (IOException ex) {
             Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -490,6 +522,10 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_TxtSourcePropertyChange
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
     
     private String getFileSize(File selectedFile) {
         double bytes = selectedFile.length();
@@ -577,6 +613,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -584,6 +621,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -594,5 +632,6 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
