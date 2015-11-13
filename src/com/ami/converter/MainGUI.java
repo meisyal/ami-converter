@@ -63,7 +63,8 @@ public class MainGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
-        jTextField1.setEnabled(false);
+        jComboBox1.setEnabled(false);
+        jComboBox2.setEnabled(false);
     }
 
     /**
@@ -109,8 +110,11 @@ public class MainGUI extends javax.swing.JFrame {
         CmdOpen = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -214,14 +218,15 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel9.setText("Bitrate control");
 
-        jTextField1.setText("0");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel10.setText("bits/s");
+
+        jLabel11.setText("Frame-rate");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15", "25", "29.97", "30", "50", "59.94", "60" }));
+
+        jLabel12.setText("frame/s");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -274,12 +279,18 @@ public class MainGUI extends javax.swing.JFrame {
                             .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11))
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addGap(49, 49, 49)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12))
+                        .addGap(35, 35, 35)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -304,9 +315,14 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(29, 29, 29)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(22, 22, 22)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -378,9 +394,13 @@ public class MainGUI extends javax.swing.JFrame {
          type = CboType.getSelectedIndex();
          
          if (type == 0) {
-             jTextField1.setEnabled(false);
+             jComboBox2.setEnabled(false);
+         } else if (type == 1) {
+             jComboBox2.setEnabled(true);
+             jComboBox1.setEnabled(false);
          } else {
-             jTextField1.setEnabled(true);
+             jComboBox2.setEnabled(true);
+             jComboBox1.setEnabled(true);
          }
     }//GEN-LAST:event_CboTypeActionPerformed
 
@@ -412,7 +432,8 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println(selectedCodec);
             
             try {
-                audEnc.encode(TxtSource.getText(), TxtDestination.getText());
+                audEnc.encode(TxtSource.getText(), TxtDestination.getText(),
+                        jComboBox2.getSelectedItem().toString());
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (EncoderException ex) {
@@ -424,7 +445,9 @@ public class MainGUI extends javax.swing.JFrame {
             vidEnc.setCodec(selectedCodec);
             
             try {
-                vidEnc.encode(TxtSource.getText(), TxtDestination.getText());
+                vidEnc.encode(TxtSource.getText(), TxtDestination.getText(),
+                        jComboBox2.getSelectedItem().toString(),
+                        jComboBox1.getSelectedItem().toString());
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (EncoderException ex) {
@@ -522,10 +545,6 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_TxtSourcePropertyChange
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
     
     private String getFileSize(File selectedFile) {
         double bytes = selectedFile.length();
@@ -609,11 +628,15 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JProgressBar PGBar;
     private javax.swing.JTextField TxtDestination;
     private javax.swing.JTextField TxtSource;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -632,6 +655,5 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

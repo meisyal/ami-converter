@@ -27,7 +27,11 @@ public class VideoEncoder {
      * @throws EncoderException
      */
     
-    public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
+    public void encode(String sourcePath, String destinationPath, String bitRate, String frameRate) throws IllegalArgumentException, EncoderException {
+        String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
+        int bitrate = Integer.parseInt(bitRate);
+        int framerate = Integer.parseInt(frameRate);
+        
         File sourceFile;
         sourceFile = new File(sourcePath);
         File destinationFile;
@@ -37,10 +41,11 @@ public class VideoEncoder {
         VideoAttributes video;
         video = new VideoAttributes();
         video.setCodec(codec);
-        video.setBitRate(960000);
+        video.setBitRate(bitrate);
+        video.setFrameRate(framerate);
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
-        attrs.setFormat(destinationPath.substring(destinationPath.lastIndexOf(".") + 1));
+        attrs.setFormat(formatType);
         attrs.setVideoAttributes(video);
         attrs.setAudioAttributes(audio);
         Encoder encoder;
