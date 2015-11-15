@@ -27,9 +27,19 @@ public class VideoEncoder {
      * @throws EncoderException
      */
     
+    /**
+     *
+     * @param sourcePath
+     * @param destinationPath
+     * @param bitRate
+     * @param frameRate
+     * @throws IllegalArgumentException
+     * @throws EncoderException
+     */
     public void encode(String sourcePath, String destinationPath, String bitRate, String frameRate) throws IllegalArgumentException, EncoderException {
         String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
-        int bitrate = Integer.parseInt(bitRate);
+        // bitrate is from kbps to bps
+        int bitrate = Integer.parseInt(bitRate) * 1000;
         int framerate = Integer.parseInt(frameRate);
         
         File sourceFile;
