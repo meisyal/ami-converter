@@ -24,8 +24,19 @@ public class AudioEncoder {
      * @throws it.sauronsoftware.jave.EncoderException
      */
     private String codec;
-    public void encode(String sourcePath, String destinationPath) throws IllegalArgumentException, EncoderException {
+
+    /**
+     *
+     * @param sourcePath
+     * @param destinationPath
+     * @param bitRate
+     * @throws IllegalArgumentException
+     * @throws EncoderException
+     */
+    public void encode(String sourcePath, String destinationPath, String bitRate) throws IllegalArgumentException, EncoderException {
         String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
+        // bitrate is from kbps to bps
+        int bitrate = Integer.parseInt(bitRate) * 1000;
         
         File sourceFile;
         sourceFile = new File(sourcePath);
@@ -35,6 +46,7 @@ public class AudioEncoder {
         encoder = new Encoder();
         AudioAttributes audio;
         audio = new AudioAttributes();
+        audio.setBitRate(bitrate);
         EncodingAttributes attrs;
         attrs = new EncodingAttributes();
         attrs.setFormat(formatType);

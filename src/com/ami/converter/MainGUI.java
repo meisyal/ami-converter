@@ -5,7 +5,6 @@
  */
 package com.ami.converter;
 
-
 import it.sauronsoftware.jave.EncoderException;
 import com.ami.converter.image.ImageEncoder;
 import com.ami.converter.audio.AudioEncoder;
@@ -18,13 +17,14 @@ import java.text.DecimalFormat;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author ASUS-PC
+ * @author Afina, Meisyal, Irfan
  */
 public class MainGUI extends javax.swing.JFrame {
     int type;
@@ -33,6 +33,8 @@ public class MainGUI extends javax.swing.JFrame {
     String[][][] outputExtension;
     String[][] videoCodec;
     String[][] audioCodec;
+    String[] audioBitRate;
+    String[] videoBitRate;
     String selectedCodec;
     File currOpen;
     File currSave;
@@ -60,9 +62,17 @@ public class MainGUI extends javax.swing.JFrame {
             {"libmp3lame", "libfaac", "mp2", "flac", "libvorbis", "wmav2"}};
         this.videoCodec=new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4", "FLV", "WMV"},
             {"mpeg1video", "mpeg2video", "mpeg4", "flv", "wmv2"}};
+        
+        this.audioBitRate = new String[]{"16", "24", "32", "48", "64", "96",
+            "128", "192", "256", "320"};
+        this.videoBitRate = new String[]{"128", "400", "750", "1000", "2500",
+            "3800", "4500", "6800"};
+        
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
         CmdConvert.setEnabled(false);
+        jComboBox1.setEnabled(false);
+        jComboBox2.setEnabled(false);
     }
 
     /**
@@ -107,6 +117,12 @@ public class MainGUI extends javax.swing.JFrame {
         LblSize1 = new javax.swing.JLabel();
         CmdOpen = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -208,6 +224,18 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel8.setText("0 %");
 
+        jLabel9.setText("Bitrate control");
+
+        jLabel10.setText("kb/s");
+
+        jLabel11.setText("Frame-rate");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15", "25", "29.97", "30", "50", "59.94", "60" }));
+
+        jLabel12.setText("frame/s");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose bitrate..." }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,7 +285,20 @@ public class MainGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
                             .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12))
+                        .addGap(35, 35, 35)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -280,6 +321,16 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(TxtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CmdBrowse2))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(22, 22, 22)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -345,10 +396,26 @@ public class MainGUI extends javax.swing.JFrame {
         } else {
             currOpen=OPF.getCurrentDirectory();
         }
+        
+        PGBar.setValue(PGBar.getMinimum());
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
          type = CboType.getSelectedIndex();
+         DefaultComboBoxModel audioModel = new DefaultComboBoxModel(audioBitRate);
+         DefaultComboBoxModel videoModel = new DefaultComboBoxModel(videoBitRate);
+         
+         if (type == 0) {
+             jComboBox2.setEnabled(false);
+         } else if (type == 1) {
+             jComboBox2.setModel(audioModel);
+             jComboBox2.setEnabled(true);
+             jComboBox1.setEnabled(false);
+         } else {
+             jComboBox2.setModel(videoModel);
+             jComboBox2.setEnabled(true);
+             jComboBox1.setEnabled(true);
+         }
     }//GEN-LAST:event_CboTypeActionPerformed
 
     private void TxtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDestinationActionPerformed
@@ -379,7 +446,8 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println(selectedCodec);
             
             try {
-                audEnc.encode(TxtSource.getText(), TxtDestination.getText());
+                audEnc.encode(TxtSource.getText(), TxtDestination.getText(),
+                        jComboBox2.getSelectedItem().toString());
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (EncoderException ex) {
@@ -391,7 +459,9 @@ public class MainGUI extends javax.swing.JFrame {
             vidEnc.setCodec(selectedCodec);
             
             try {
-                vidEnc.encode(TxtSource.getText(), TxtDestination.getText());
+                vidEnc.encode(TxtSource.getText(), TxtDestination.getText(),
+                        jComboBox2.getSelectedItem().toString(),
+                        jComboBox1.getSelectedItem().toString());
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (EncoderException ex) {
@@ -475,7 +545,6 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void CmdOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdOpenActionPerformed
         try {
-            // TODO add your handling code here:
             Desktop.getDesktop().open(new File(TxtDestination.getText()));
         } catch (IOException ex) {
             Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -496,8 +565,8 @@ public class MainGUI extends javax.swing.JFrame {
         final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
         int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
         DecimalFormat df = new DecimalFormat("#,##0.#");
-        String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
-                units[digitGroups];
+        String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) +
+                " " + units[digitGroups];
         
         return convertedSize;
     }
@@ -573,10 +642,15 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JProgressBar PGBar;
     private javax.swing.JTextField TxtDestination;
     private javax.swing.JTextField TxtSource;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -584,6 +658,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
