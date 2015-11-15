@@ -17,13 +17,14 @@ import java.text.DecimalFormat;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Afina, Meisyal, Rahmat
+ * @author Afina, Meisyal, Irfan
  */
 public class MainGUI extends javax.swing.JFrame {
     int type;
@@ -32,6 +33,8 @@ public class MainGUI extends javax.swing.JFrame {
     String[][][] outputExtension;
     String[][] videoCodec;
     String[][] audioCodec;
+    String[] audioBitRate;
+    String[] videoBitRate;
     String selectedCodec;
     File currOpen;
     File currSave;
@@ -59,6 +62,11 @@ public class MainGUI extends javax.swing.JFrame {
             {"libmp3lame", "libfaac", "mp2", "flac", "libvorbis", "wmav2"}};
         this.videoCodec=new String[][]{{"MPEG", "MPEG2", "h.264/MPEG4", "FLV", "WMV"},
             {"mpeg1video", "mpeg2video", "mpeg4", "flv", "wmv2"}};
+        
+        this.audioBitRate = new String[]{"16", "24", "32", "48", "64", "96",
+            "128", "192", "256", "320"};
+        this.videoBitRate = new String[]{"128", "400", "750", "1000", "2500",
+            "3800", "4500", "6800"};
         
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
@@ -218,7 +226,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel9.setText("Bitrate control");
 
-        jLabel10.setText("bits/s");
+        jLabel10.setText("kb/s");
 
         jLabel11.setText("Frame-rate");
 
@@ -226,7 +234,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel12.setText("frame/s");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose bitrate..." }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -388,17 +396,23 @@ public class MainGUI extends javax.swing.JFrame {
         } else {
             currOpen=OPF.getCurrentDirectory();
         }
+        
+        PGBar.setValue(PGBar.getMinimum());
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
          type = CboType.getSelectedIndex();
+         DefaultComboBoxModel audioModel = new DefaultComboBoxModel(audioBitRate);
+         DefaultComboBoxModel videoModel = new DefaultComboBoxModel(videoBitRate);
          
          if (type == 0) {
              jComboBox2.setEnabled(false);
          } else if (type == 1) {
+             jComboBox2.setModel(audioModel);
              jComboBox2.setEnabled(true);
              jComboBox1.setEnabled(false);
          } else {
+             jComboBox2.setModel(videoModel);
              jComboBox2.setEnabled(true);
              jComboBox1.setEnabled(true);
          }
@@ -551,8 +565,8 @@ public class MainGUI extends javax.swing.JFrame {
         final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
         int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
         DecimalFormat df = new DecimalFormat("#,##0.#");
-        String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) + " " + 
-                units[digitGroups];
+        String convertedSize = df.format(bytes/Math.pow(1024, digitGroups)) +
+                " " + units[digitGroups];
         
         return convertedSize;
     }
