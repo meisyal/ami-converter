@@ -29,6 +29,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MainGUI extends javax.swing.JFrame {
     int type;
     int count[];
+    long sourceSize;
+    long destSize;
     String[][] inputExtension;
     String[][][] outputExtension;
     String[][] videoCodec;
@@ -66,7 +68,7 @@ public class MainGUI extends javax.swing.JFrame {
         this.audioBitRate = new String[]{"16", "24", "32", "48", "64", "96",
             "128", "192", "256", "320"};
         this.videoBitRate = new String[]{"128", "400", "750", "1000", "2500",
-            "3800", "4500", "6800"};
+            "3800", "4500", "6800", "9800"};
         
         setLocationRelativeTo(null);
         setTitle("AMI Converter");
@@ -230,7 +232,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel11.setText("Frame-rate");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15", "25", "29.97", "30", "50", "59.94", "60" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "15", "25", "30", "50", "60" }));
 
         jLabel12.setText("frame/s");
 
@@ -372,9 +374,17 @@ public class MainGUI extends javax.swing.JFrame {
             OPF.setCurrentDirectory(currOpen);
         }
         
-        FileFilter fileFilter = new FileNameExtensionFilter(inputExtension[0][type], 
+        FileFilter fileFilterExt = new FileNameExtensionFilter(inputExtension[0][type], 
                 inputExtension[1][type]);
-        OPF.setFileFilter(fileFilter);
+        OPF.addChoosableFileFilter(fileFilterExt);
+        for (int i = 0; i < count[type]; i++) {
+            FileNameExtensionFilter fileFilter;
+            fileFilter = new FileNameExtensionFilter(outputExtension[0][type][i],
+                    outputExtension[1][type][i]);
+            OPF.addChoosableFileFilter(fileFilter);
+        }
+        
+        OPF.setAcceptAllFileFilterUsed(false);
         int result = OPF.showOpenDialog(this);
         
         if (result == JFileChooser.APPROVE_OPTION) {   
@@ -386,6 +396,7 @@ public class MainGUI extends javax.swing.JFrame {
             if (selectedFile != null && selectedFile.isFile()) {
                 // get original file size
                 String originalSize = getFileSize(selectedFile);
+                sourceSize=selectedFile.length();
                 LblSize1.setText(originalSize);
                 CmdBrowse2.setEnabled(true);
                 CmdConvert.setEnabled(false);
@@ -477,6 +488,7 @@ public class MainGUI extends javax.swing.JFrame {
         if (selectedFile != null && selectedFile.isFile()) {
             // get compressed file size
             String compressedSize = getFileSize(selectedFile);
+            destSize = selectedFile.length();
             LblSize2.setText(compressedSize);
         }
         
@@ -562,6 +574,7 @@ public class MainGUI extends javax.swing.JFrame {
     
     private String getFileSize(File selectedFile) {
         double bytes = selectedFile.length();
+        
         final String[] units = new String[]{"Bi", "KiB", "MiB", "GiB", "TiB"};
         int digitGroups = (int) (Math.log10((bytes))/(Math.log10(1024)));
         DecimalFormat df = new DecimalFormat("#,##0.#");
@@ -578,15 +591,13 @@ public class MainGUI extends javax.swing.JFrame {
         compressedSizeText = LblSize2.getText();
         
         double originalSizeValue;
-        originalSizeValue = Double.parseDouble(
-                originalSizeText.substring(0, originalSizeText.indexOf(" ")));
+        originalSizeValue = (double)sourceSize;
         
         double compressedSizeValue;
-        compressedSizeValue = Double.parseDouble(
-                compressedSizeText.substring(0, compressedSizeText.indexOf(" ")));
+        compressedSizeValue = (double)destSize;
         
         double compressionRatio;
-        compressionRatio = (originalSizeValue / compressedSizeValue);
+        compressionRatio = (  compressedSizeValue / originalSizeValue)*100.0;
         
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);

@@ -10,6 +10,7 @@ import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
 import it.sauronsoftware.jave.VideoAttributes;
+import it.sauronsoftware.jave.VideoSize;
 import java.io.File;
 
 /**
