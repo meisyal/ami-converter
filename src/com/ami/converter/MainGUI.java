@@ -125,6 +125,8 @@ public class MainGUI extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel12 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
@@ -238,6 +240,10 @@ public class MainGUI extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose bitrate..." }));
 
+        jLabel13.setText("Execution time:");
+
+        jLabel14.setText("0 s");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -276,18 +282,11 @@ public class MainGUI extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(LblResult)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8))
-                            .addComponent(LblSize1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LblSize2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(LblResult)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -300,7 +299,19 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel12))
-                        .addGap(35, 35, 35)))
+                        .addGap(35, 35, 35))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LblSize2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LblSize1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -348,6 +359,10 @@ public class MainGUI extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(LblResult)
                     .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -356,9 +371,9 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(LblSize2))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
@@ -396,19 +411,20 @@ public class MainGUI extends javax.swing.JFrame {
             if (selectedFile != null && selectedFile.isFile()) {
                 // get original file size
                 String originalSize = getFileSize(selectedFile);
-                sourceSize=selectedFile.length();
+                sourceSize = selectedFile.length();
                 LblSize1.setText(originalSize);
                 CmdBrowse2.setEnabled(true);
                 CmdConvert.setEnabled(false);
                 CmdOpen.setEnabled(false);   
             }
             
-            currOpen=OPF.getCurrentDirectory();
+            currOpen = OPF.getCurrentDirectory();
         } else {
-            currOpen=OPF.getCurrentDirectory();
+            currOpen = OPF.getCurrentDirectory();
         }
         
         PGBar.setValue(PGBar.getMinimum());
+        jLabel14.setText("0 s");
     }//GEN-LAST:event_CmdBrowse1ActionPerformed
 
     private void CboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CboTypeActionPerformed
@@ -440,9 +456,11 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_CmdExitActionPerformed
 
     private void CmdConvertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmdConvertActionPerformed
+        long startTime = System.nanoTime();
+        
         if (type == 0) {
             ImageEncoder imgEnc;
-            imgEnc= new ImageEncoder();
+            imgEnc = new ImageEncoder();
             
             try {
                 imgEnc.encode(TxtSource.getText(), TxtDestination.getText());
@@ -451,7 +469,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         } else if (type == 1) {
             AudioEncoder audEnc;
-            audEnc= new AudioEncoder();
+            audEnc = new AudioEncoder();
 
             audEnc.setCodec(selectedCodec);
             System.out.println(selectedCodec);
@@ -466,7 +484,7 @@ public class MainGUI extends javax.swing.JFrame {
             }
         } else {
             VideoEncoder vidEnc;
-            vidEnc= new VideoEncoder();
+            vidEnc = new VideoEncoder();
             vidEnc.setCodec(selectedCodec);
             
             try {
@@ -480,7 +498,12 @@ public class MainGUI extends javax.swing.JFrame {
             }
         }
         
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        double durationInSecond = (double) duration / 1000000000.0;
+        
         PGBar.setValue(PGBar.getMaximum());
+        jLabel14.setText(String.valueOf(durationInSecond) + " s");
         CmdOpen.setEnabled(true);
         
         File selectedFile = new File(TxtDestination.getText());
@@ -518,7 +541,7 @@ public class MainGUI extends javax.swing.JFrame {
             FileNameExtensionFilter selectedFilter; 
             selectedFilter = (FileNameExtensionFilter) SPF.getFileFilter();
             
-            for (String ext :selectedFilter.getExtensions()) {
+            for (String ext : selectedFilter.getExtensions()) {
                 System.out.println(ext);
             }
             
@@ -591,15 +614,15 @@ public class MainGUI extends javax.swing.JFrame {
         compressedSizeText = LblSize2.getText();
         
         double originalSizeValue;
-        originalSizeValue = (double)sourceSize;
+        originalSizeValue = (double) sourceSize;
         
         double compressedSizeValue;
-        compressedSizeValue = (double)destSize;
+        compressedSizeValue = (double) destSize;
         
         double compressionRatio;
-        compressionRatio = (  compressedSizeValue / originalSizeValue)*100.0;
+        compressionRatio = (compressedSizeValue / originalSizeValue) * 100.0;
         
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.###");
         df.setRoundingMode(RoundingMode.CEILING);
         
         jLabel8.setText(String.valueOf(df.format(compressionRatio) + " %"));
@@ -662,6 +685,8 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
