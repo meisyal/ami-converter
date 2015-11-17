@@ -33,7 +33,8 @@ public class AudioEncoder {
      * @throws IllegalArgumentException
      * @throws EncoderException
      */
-    public void encode(String sourcePath, String destinationPath, String bitRate) throws IllegalArgumentException, EncoderException {
+    public void encode(String sourcePath, String destinationPath, String bitRate)
+            throws IllegalArgumentException, EncoderException {
         String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
         // bitrate is from kbps to bps
         int bitrate = Integer.parseInt(bitRate) * 1000;

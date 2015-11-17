@@ -10,7 +10,6 @@ import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
 import it.sauronsoftware.jave.VideoAttributes;
-import it.sauronsoftware.jave.VideoSize;
 import java.io.File;
 
 /**
@@ -37,7 +36,8 @@ public class VideoEncoder {
      * @throws IllegalArgumentException
      * @throws EncoderException
      */
-    public void encode(String sourcePath, String destinationPath, String bitRate, String frameRate) throws IllegalArgumentException, EncoderException {
+    public void encode(String sourcePath, String destinationPath, String bitRate, String frameRate)
+            throws IllegalArgumentException, EncoderException {
         String formatType = destinationPath.substring(destinationPath.lastIndexOf(".") + 1);
         // bitrate is from kbps to bps
         int bitrate = Integer.parseInt(bitRate) * 1000;
