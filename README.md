@@ -22,12 +22,13 @@ compression rate/ratio, and time of execution when the conversion is performed.
 
 ### Requirements
 
-This project need Java Development Kit (JDK), we recommend version 8 or any latest
+This project needs Java Development Kit (JDK), we recommend version 8 or any latest
 version, and JAVE. JAVE (Java Audio Video Encoder) library is Java wrapper on the
 [ffmpeg][ffmpeg] project. See, details of JAVE library [here][jave].
 
-This program run on both Windows and Linux. We have tested on Windows and Ubuntu 14.04.
-So, you have to adjust your envinroment in order the program can run properly.
+This program runs on both Windows and Linux. We have tested on Windows and Ubuntu 14.04.
+So, you have to adjust your envinroment in order the program can run properly. Feel
+free to e-mail us or submit an issue if you have any problem.
 
 ### Running the Program
 
@@ -41,13 +42,17 @@ Please, follow the steps below:
 ## License
 
 This project is released under MIT License. Please, check [LICENSE][license] file for
-more information. All other contents are redistributed their original license
-terms.
+more information. JAVE library is is Free Software and it is licensed under GPL. All
+other contents are redistributed their original license terms.
 
-ami-converter is originally multimedia network assignment.
+ami-converter is originally multimedia network assignment (coding project). Multimedia
+Network course, class of 2015, [Department of Informatics][ifits], [Institut Teknologi
+Sepuluh Nopember][its] Surabaya.
 
 Copyright (C) 2015 - Afina, Meisyal, and Irfan.
 
 [ffmpeg]: http://ffmpeg.mplayerhq.hu/
 [jave]: http://www.sauronsoftware.it/projects/jave/index.php
 [license]: https://github.com/meisyal/ami-converter/blob/master/LICENSE
+[ifits]: http://if.its.ac.id
+[its]: https://its.ac.id
