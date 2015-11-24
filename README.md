@@ -18,6 +18,10 @@ Beside that, this application gives you the information about multimedia file.
 This information contains the original size of file, the compressed size,
 compression rate/ratio, and time of execution when the conversion is performed.
 
+Screenshot of ami-converter is given below
+
+<img src="http://static.meisyal.web.id/images/misc/ami-converter.png" />
+
 ## How to Run
 
 ### Requirements
