@@ -10,9 +10,9 @@ as follows:
 * Audio: Wave (WAV), MP2, MP3, AAC, FLAC, OGG, and WMA audio files
 * Video: Avi (AVI), MPEG-1, MPEG-2, H.264/MPEG-4 AVC, FLV, and WMV video files
 
-If you choose the audio file, you can choose the bitrate. Bitrate is from 16 to
-320 kbps. Then, if you choose the video file, you can set not only bitrate but
-also frame-rate. Frame-rate is from 15 to 60 fps. 
+If you choose the audio file, you can control the bitrate. Bitrate is from 16 to
+320 kbps. Then, if you choose the video file, you can set not only the bitrate
+but also the frame-rate. The frame-rate is from 15 to 60 fps. 
 
 Beside that, this application gives you the information about multimedia file.
 This information contains the original size of file, the compressed size,
@@ -39,9 +39,12 @@ free to e-mail us or submit an [issue][issue] if you have any problem.
 Please, follow the steps below:
 
 1. Clone this repository on your local computer.
-2. Import the cloned source code into NetBeans IDE.
+2. Import the cloned source code into NetBeans IDE*.
 3. Add JAVE library on your Java `classpath`.
 4. Build and run the program.
+
+* If you use another Java IDE such as Intellij IDEA and Eclispe, you should adjust this
+step.
 
 ## License
 
@@ -53,7 +56,7 @@ ami-converter is originally multimedia network assignment (coding project). Mult
 Network course, class of 2015, [Department of Informatics][ifits], [Institut Teknologi
 Sepuluh Nopember][its] Surabaya.
 
-Copyright (C) 2015 - Afina, Meisyal, and Irfan.
+Copyright © 2015 - Afina, Meisyal, and Irfan.
 
 [ffmpeg]: http://ffmpeg.mplayerhq.hu/
 [jave]: http://www.sauronsoftware.it/projects/jave/index.php
