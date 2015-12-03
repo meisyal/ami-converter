@@ -43,7 +43,7 @@ Please, follow the steps below:
 3. Add JAVE library on your Java `classpath`.
 4. Build and run the program.
 
-*If you use another Java IDE such as Intellij IDEA and Eclispe, you should adjust this
+*If you use another Java IDE such as Intellij IDEA or Eclispe, you should adjust this
 step (second step).
 
 ## License
