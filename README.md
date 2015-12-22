@@ -15,7 +15,7 @@ If you choose the audio file, you can control the bitrate. Bitrate is from 16 to
 but also the frame-rate. The frame-rate is from 15 to 60 fps. 
 
 Beside that, this application gives you the information about multimedia file.
-This information contains the original size of file, the compressed size,
+The information contains the original size of file, the compressed size,
 compression rate/ratio, and time of execution when the conversion is performed.
 
 Screenshot of ami-converter is given below
@@ -49,14 +49,14 @@ step (second step).
 ## License
 
 This project is released under MIT License. Please, check [LICENSE][license] file for
-more information. JAVE library is Free Software and it is licensed under GPL. All
+more information. JAVE library is free software and it is licensed under GPL. All
 other contents are redistributed their original license terms.
 
 ami-converter is originally multimedia network assignment (coding project). Multimedia
-Network course, class of 2015, [Department of Informatics][ifits], [Institut Teknologi
+network course of 2015, [Department of Informatics][ifits], [Institut Teknologi
 Sepuluh Nopember][its] Surabaya.
 
-Copyright © 2015 - Afina, Meisyal, and Irfan.
+Copyright Â© 2015 - Afina, Meisyal, and Irfan.
 
 [ffmpeg]: http://ffmpeg.mplayerhq.hu/
 [jave]: http://www.sauronsoftware.it/projects/jave/index.php
