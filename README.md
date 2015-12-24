@@ -50,7 +50,7 @@ step (second step).
 
 This project is released under MIT License. Please, check [LICENSE][license] file for
 more information. JAVE library is free software and it is licensed under GPL. All
-other contents are redistributed their original license terms.
+other contents are redistributed under their original license terms.
 
 ami-converter is originally multimedia network assignment (coding project). Multimedia
 network course of 2015, [Department of Informatics][ifits], [Institut Teknologi
