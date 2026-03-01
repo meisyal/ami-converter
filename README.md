@@ -20,7 +20,7 @@ compression rate/ratio, and time of execution when the conversion is performed.
 
 Screenshot of ami-converter is given below
 
-<img src="https://res.cloudinary.com/daokp8cnd/image/upload/v1479644079/ami-converter/main-gui.png" />
+<img src="https://github.com/meisyal/ami-converter/blob/master/assets/main-gui.png" />
 
 ## How to Run
 
